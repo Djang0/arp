@@ -11,6 +11,7 @@ class Metronome
         this.nextNoteTime = 0.0;     // when the next note is due
         this.isRunning = false;
         this.intervalID = null;
+        this.colordiv = null;
     }
 
     nextNote()
@@ -41,18 +42,23 @@ class Metronome
 
         osc.connect(envelope);
         envelope.connect(this.audioContext.destination);
-    
+        
         osc.start(time);
         osc.stop(time + 0.03);
+        
     }
 
     scheduler()
     {
         // while there are notes that will need to play before the next interval, schedule them and advance the pointer.
+        this.colordiv.style.backgroundColor = 'green'
         while (this.nextNoteTime < this.audioContext.currentTime + this.scheduleAheadTime ) {
+            
             this.scheduleNote(this.currentQuarterNote, this.nextNoteTime);
             this.nextNote();
+            
         }
+        //this.colordiv.style.backgroundColor = 'pink'
     }
 
     start()
@@ -79,8 +85,9 @@ class Metronome
         clearInterval(this.intervalID);
     }
 
-    startStop()
+    startStop(elem)
     {
+        this.colordiv=elem;
         if (this.isRunning) {
             this.stop();
         }

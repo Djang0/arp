@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@moonwave99/fretboard.js": "^0.2.7"
+  }
+}
